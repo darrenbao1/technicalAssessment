@@ -43,3 +43,19 @@ export const GetApiGatewayUrl = (city) => {
 	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 	return url;
 };
+
+export const fetchWeatherData = async (city, setWeatherData, addSearchTerm) => {
+	const url = GetApiGatewayUrl(city);
+	try {
+		const response = await fetch(url);
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		const data = await response.json();
+		const decodedData = decodeData(data);
+		setWeatherData(decodedData);
+		addSearchTerm(decodedData);
+	} catch (error) {
+		console.error("Failed to fetch weather data", error);
+	}
+};

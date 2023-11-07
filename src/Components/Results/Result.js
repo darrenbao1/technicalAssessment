@@ -64,7 +64,7 @@ export const Result = (props) => {
 						</GeneralLabels>
 					</InformationStackDiv>
 				</HorizontalStackDiv>
-				<SearchHistory />
+				<SearchHistory setWeatherData={props.setWeatherData} />
 			</VertialStackDiv>
 		</ResultDivWrapper>
 	);

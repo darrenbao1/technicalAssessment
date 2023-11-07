@@ -25,25 +25,16 @@ export const SearchHistoryItemWrapper = styled.div`
 `;
 export const SearchHistoryItem = styled.div`
 	border-radius: 16px;
-	background: rgba(26, 26, 26, 0.5);
+	background: ${(props) =>
+		props.isDark ? "rgba(26, 26, 26, 0.5)" : "rgba(255, 255, 255, 0.40)"};
 	height: 60px;
 	display: flex;
 	align-items: center;
 	padding: 0 26px;
-
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-
-	@media (max-width: 600px) {
-		flex-direction: column;
-		align-items: flex-start;
-	}
 `;
 
 export const SearchHistoryCityLabel = styled.div`
-	color: #fff;
+	color: ${(props) => (props.isDark ? "#fff" : "#000")};
 	font-family: Noto Sans;
 	font-size: 16px;
 	font-style: normal;
@@ -52,17 +43,20 @@ export const SearchHistoryCityLabel = styled.div`
 `;
 
 export const SearchHistoryDateLabel = styled.div`
-	color: rgba(255, 255, 255, 0.5);
+	color: ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.5)" : "#000")};
 	text-align: right;
 	font-family: Noto Sans;
 	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
+	margin-left: auto;
+	margin-right: 0;
 	@media (max-width: 600px) {
-		order: 2;
-		width: 100%;
-		margin-top: 10px;
+		margin-left: 0;
+		margin-right: auto;
+		text-align: left;
+		font-size: 10px;
 	}
 `;
 
@@ -76,14 +70,36 @@ export const ActionButtonContainer = styled.div`
 	border: 2px solid rgba(255, 255, 255, 0.4);
 	background: none;
 	cursor: pointer;
+	${(props) =>
+		!props.isDark &&
+		`
+    background-color: white;
+	border-radius: 50%;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);`}
 `;
 export const SearchIcon = styled(SearchIconSVG)`
 	width: 16px;
 	height: 16px;
-	color: rgba(255, 255, 255, 0.4);
+	color: ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.4)" : "#666")};
 `;
 export const DeleteIcon = styled(DeleteIconSVG)`
 	width: 16px;
 	height: 16px;
-	color: rgba(255, 255, 255, 0.4);
+	color: ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.4)" : "#666")};
+`;
+export const HorizontalStackDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin-right: 10px;
+	margin-left: auto;
+	@media (max-width: 600px) {
+		flex-direction: column;
+	}
+`;
+export const ButtonWrapper = styled.div`
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	float: right;
 `;

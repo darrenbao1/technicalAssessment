@@ -28,7 +28,33 @@ export const SearchbarInput = styled.input`
 	font-weight: 400;
 	line-height: normal;
 	background: transparent;
+
+	/* Remove Safari input highlight */
+	&::-webkit-input-placeholder {
+		color: ${(props) => (props.isDark ? "#FFF" : "#000")};
+	}
+	&:focus {
+		outline: none;
+		box-shadow: none;
+	}
+
+	/* Style for selected text */
+	&::selection {
+		background: ${(props) => (props.isDark ? "#666" : "#B0D0FF")};
+	}
+
+	/* Remove autofill color in Safari */
+	&:-webkit-autofill {
+		-webkit-box-shadow: 0 0 0 30px white inset;
+		-webkit-text-fill-color: ${(props) => (props.isDark ? "#FFF" : "#000")};
+	}
+
+	/* Responsive font size */
+	@media (max-width: 600px) {
+		font-size: 12px;
+	}
 `;
+
 export const SearchbarWrapper = styled.div`
 	display: flex;
 	align-items: center;

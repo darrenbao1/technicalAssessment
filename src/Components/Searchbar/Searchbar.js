@@ -8,26 +8,20 @@ import {
 	SearchButton,
 	StyledSearchIcon,
 } from "./Searchbar.style";
-import { GetApiGatewayUrl, decodeData } from "../../utils/utils";
+import {
+	GetApiGatewayUrl,
+	decodeData,
+	fetchWeatherData,
+} from "../../utils/utils";
 import { useState } from "react";
 import { useSearchHistory } from "../Provider/SearchHistoryContext";
 export const Searchbar = (props) => {
 	const prefersDarkMode = usePrefersDarkMode();
 	const { addSearchTerm } = useSearchHistory();
 	const [city, setCity] = useState("");
-	const fetchWeather = async () => {
-		const url = GetApiGatewayUrl(city);
-		try {
-			const response = await fetch(url);
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			const data = await response.json();
-			props.setWeatherData(decodeData(data));
-			addSearchTerm(decodeData(data));
-		} catch (error) {
-			console.error("Failed to fetch weather data", error);
-		}
+
+	const handleFetchWeather = () => {
+		fetchWeatherData(city, props.setWeatherData, addSearchTerm);
 	};
 	return (
 		<SearchbarWrapper>
@@ -39,7 +33,7 @@ export const Searchbar = (props) => {
 					onChange={(e) => setCity(e.target.value)}
 				/>
 			</SearchbarDiv>
-			<SearchButton isDark={prefersDarkMode} onClick={fetchWeather}>
+			<SearchButton isDark={prefersDarkMode} onClick={handleFetchWeather}>
 				<StyledSearchIcon />
 			</SearchButton>
 		</SearchbarWrapper>
