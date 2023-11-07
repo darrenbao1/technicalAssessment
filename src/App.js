@@ -7,6 +7,7 @@ import usePrefersDarkMode from "./hooks/usePrefersDarkMode";
 import { Result } from "./Components/Results/Result";
 import { useState } from "react";
 import { SearchHistoryProvider } from "./Components/Provider/SearchHistoryContext";
+import { LoaderProvider } from "./Components/Provider/LoadingContext";
 const StyledApp = styled.div`
 	width: 100vw;
 	height: 100vh;
@@ -25,10 +26,12 @@ function App() {
 	const [weatherData, setWeatherData] = useState(null);
 	return (
 		<SearchHistoryProvider>
-			<StyledApp isDark={isDark}>
-				<Searchbar setWeatherData={setWeatherData} />
-				<Result result={weatherData} setWeatherData={setWeatherData} />
-			</StyledApp>
+			<LoaderProvider>
+				<StyledApp isDark={isDark}>
+					<Searchbar setWeatherData={setWeatherData} />
+					<Result result={weatherData} setWeatherData={setWeatherData} />
+				</StyledApp>
+			</LoaderProvider>
 		</SearchHistoryProvider>
 	);
 }

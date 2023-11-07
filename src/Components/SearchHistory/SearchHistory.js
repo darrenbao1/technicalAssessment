@@ -15,13 +15,28 @@ import {
 import usePrefersDarkMode from "../../hooks/usePrefersDarkMode";
 import { useSearchHistory } from "../Provider/SearchHistoryContext";
 import { fetchWeatherData } from "../../utils/utils";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useLoader } from "../Provider/LoadingContext";
 export const SearchHistory = (props) => {
 	const prefersDarkMode = usePrefersDarkMode();
+	const { showLoader, hideLoader } = useLoader();
 	const { history, deleteSearchTermByIndex, addSearchTerm } =
 		useSearchHistory();
 
+	const notify = () => toast("Sorry! City is invalid", { type: "error" });
+	const successToast = () =>
+		toast("Weather data fetched successfully", { type: "success" });
 	const handleFetchWeather = (city) => {
-		fetchWeatherData(city, props.setWeatherData, addSearchTerm);
+		fetchWeatherData(
+			city,
+			props.setWeatherData,
+			addSearchTerm,
+			notify,
+			successToast,
+			showLoader,
+			hideLoader
+		);
 	};
 
 	return (

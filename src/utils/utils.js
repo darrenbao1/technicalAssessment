@@ -44,18 +44,31 @@ export const GetApiGatewayUrl = (city) => {
 	return url;
 };
 
-export const fetchWeatherData = async (city, setWeatherData, addSearchTerm) => {
+export const fetchWeatherData = async (
+	city,
+	setWeatherData,
+	addSearchTerm,
+	notify,
+	successToast,
+	showLoader,
+	hideLoader
+) => {
 	const url = GetApiGatewayUrl(city);
 	try {
+		showLoader();
 		const response = await fetch(url);
 		if (!response.ok) {
+			notify();
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 		const data = await response.json();
 		const decodedData = decodeData(data);
 		setWeatherData(decodedData);
 		addSearchTerm(decodedData);
+		successToast();
 	} catch (error) {
 		console.error("Failed to fetch weather data", error);
+	} finally {
+		hideLoader();
 	}
 };
